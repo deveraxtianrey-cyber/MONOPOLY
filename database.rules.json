@@ -1,0 +1,21 @@
+{
+  "rules": {
+    "lobbies": {
+      "$lobbyId": {
+        ".read": "auth != null",
+        ".write": "auth != null",
+        "players": {
+          "$playerId": {
+            ".validate": "newData.hasChildren(['id', 'name', 'isReady'])"
+          }
+        }
+      }
+    },
+    "games": {
+      "$gameId": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      }
+    }
+  }
+}

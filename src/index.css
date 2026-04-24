@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cinzel", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --animate-float-swerve: float-swerve 3s ease-in-out infinite;
+  --animate-loading-bar: loading-bar 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes float-swerve {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-4px) rotate(-2deg); }
+  66% { transform: translateY(2px) rotate(2deg); }
+}
+
+@keyframes loading-bar {
+  0% { transform: scaleX(0); transform-origin: left; }
+  50% { transform: scaleX(1); transform-origin: left; }
+  51% { transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+@keyframes smoke-drift {
+  0% { transform: translateX(-10%) translateY(0) scale(1); opacity: 0; }
+  20% { opacity: 0.4; }
+  50% { transform: translateX(5%) translateY(-2%) scale(1.1); opacity: 0.6; }
+  80% { opacity: 0.2; }
+  100% { transform: translateX(20%) translateY(-5%) scale(1.2); opacity: 0; }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+@keyframes blood-drip {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 0.8; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+
+@keyframes blood-splatter-fade {
+  0% { transform: scale(0.8); opacity: 0; }
+  10% { transform: scale(1); opacity: 0.5; }
+  90% { opacity: 0.4; }
+  100% { opacity: 0; }
+}
+
+body {
+  background-color: #050505;
+  color: #e5e5e5;
+}
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(153, 27, 27, 0.5); /* red-800/50 */
+    border-radius: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(153, 27, 27, 0.8);
+  }
+
+  @keyframes sparkle-pulse {
+    0% { box-shadow: 0 0 0px 0px rgba(234, 179, 8, 0); filter: brightness(1); }
+    50% { box-shadow: 0 0 30px 10px rgba(234, 179, 8, 0.6); filter: brightness(1.8); }
+    100% { box-shadow: 0 0 0px 0px rgba(234, 179, 8, 0); filter: brightness(1); }
+  }
+
+  .animate-sparkle {
+    animation: sparkle-pulse 1s ease-in-out infinite;
+    z-index: 40;
+    position: relative;
+  }
+  
+  .animate-sparkle::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    background-size: 200% 200%;
+    animation: shimmer 1s infinite;
+    pointer-events: none;
+  }
+
+  @keyframes shimmer {
+    0% { background-position: 200% 200%; }
+    100% { background-position: -200% -200%; }
+  }
+
+  .animate-pulse-slow {
+    animation: pulse-slow 4s ease-in-out infinite;
+  }
+
+  .smoke-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 60%);
+    filter: blur(40px);
+    z-index: 1;
+  }
+
+  .animate-smoke-1 {
+    animation: smoke-drift 20s linear infinite;
+  }
+
+  .animate-smoke-2 {
+    animation: smoke-drift 25s linear infinite reverse;
+    animation-delay: -5s;
+  }
+
+  .animate-smoke-3 {
+    animation: smoke-drift 30s linear infinite;
+    animation-delay: -12s;
+  }
+
+  .blood-drip {
+    position: absolute;
+    top: 0;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, rgba(153, 27, 27, 0.8), rgba(136, 19, 19, 1), transparent);
+    border-radius: 0 0 10px 10px;
+    filter: blur(1px);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .blood-splatter {
+    position: absolute;
+    background: radial-gradient(circle, rgba(153, 27, 27, 0.6) 0%, rgba(136, 19, 19, 0.4) 40%, transparent 70%);
+    filter: blur(8px);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+  }
+}
